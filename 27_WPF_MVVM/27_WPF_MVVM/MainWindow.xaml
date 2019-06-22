@@ -1,0 +1,57 @@
+﻿<Window x:Class="_27_WPF_MVVM.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:_27_WPF_MVVM"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="625">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1.5*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Image Source="{Binding SelectedPhoto.FilePath}" Grid.Column="0" Grid.Row="0"/>
+        <Grid Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="5*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Name:" VerticalAlignment="Center"/>
+            <TextBlock Text="Path:" VerticalAlignment="Center" Grid.Row="2"/>
+            <TextBlock Text="Size" VerticalAlignment="Center" Grid.Row="1" />
+            <TextBlock Text="{Binding SelectedPhoto.FileName}" TextAlignment="Left" VerticalAlignment="Center" Grid.Column="1"/>
+            <TextBlock Text="{Binding SelectedPhoto.FilePath}" Grid.Column="1" Grid.Row="2" TextWrapping="Wrap" />
+            <TextBlock Text="{Binding SelectedPhoto.FileSize}" TextAlignment="Left" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1"/>
+        </Grid>
+        <ListBox Grid.Row="1" ItemsSource="{Binding Photos}" SelectedItem="{Binding SelectedPhoto}" >
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel ScrollViewer.HorizontalScrollBarVisibility="Visible" Orientation="Horizontal"></StackPanel>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <Image Width="40" Height="40" Source="{Binding Path=FilePath}"/>
+                        <TextBlock Text="{Binding Path=FileName}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <StackPanel Grid.Column="1" Grid.Row="1">
+            <Button Content="Add" Command="{Binding AddCommand}"/>
+            <Button Content="Delete" Command="{Binding RemoveCommand}" CommandParameter="{Binding SelectedPhoto}"/>
+        </StackPanel>
+    </Grid>
+</Window>
